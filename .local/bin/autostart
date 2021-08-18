@@ -1,0 +1,4 @@
+compton &
+dwmblocks &
+nitrogen --restore &
+setxkbmap -option caps:super
