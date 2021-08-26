@@ -10,4 +10,4 @@ printf "[OK]\n";
 
 printf "Copying other programs configuration files...";
 cp -r .config ~/.config
-printf "[OK]";
+printf "[OK]\n";
