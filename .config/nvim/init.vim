@@ -18,7 +18,8 @@ Plugin 'preservim/nerdtree' |
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Icons
-Plugin 'ryanoasis/vim-devicons'
+" Plugin 'ryanoasis/vim-devicons'
+" Plugin 'ryanoasis/vim-webdevicons'
 
 "Colorschemes
 Plugin 'gryf/wombat256grf'
@@ -72,7 +73,11 @@ Plugin 'itchyny/lightline.vim'
 " Laravel Blade syntax highlighting
 Plugin 'jwalton512/vim-blade'
 
-" 
+" Markdown preview 
+" Plugin 'instant-markdown/vim-instant-markdown'
+
+"Pep 8 ident
+Plugin 'Vimjas/vim-python-pep8-indent'
 
 "All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -185,16 +190,16 @@ let NERDTreeShowHidden=1
 
 "edit git symbols
 let g:NERDTreeGitStatusIndicatorMapCustom = {
-                \ 'Modified'  :'',
-                \ 'Staged'    :'',
-                \ 'Untracked' :'',
-                \ 'Renamed'   :'',
+                \ 'Modified'  :'✹',
+                \ 'Staged'    :'✚',
+                \ 'Untracked' :'*',
+                \ 'Renamed'   :'➜',
                 \ 'Unmerged'  :'═',
-                \ 'Deleted'   :'',
-                \ 'Dirty'     :'',
+                \ 'Deleted'   :'\uf2ed',
+                \ 'Dirty'     :'-',
                 \ 'Ignored'   :'',
                 \ 'Clean'     :'',
-                \ 'Unknown'   :'',
+                \ 'Unknown'   :'?',
                 \ }
 
 " Source a global configuration file if available
@@ -346,3 +351,10 @@ set cursorline
 
 " Clear search highlighting
 nnoremap <Leader><Leader> :noh<cr>
+
+" Figure out the system Python for Neovim.
+if exists("$VIRTUAL_ENV")
+    let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
+else
+    let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+endif
