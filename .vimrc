@@ -1,5 +1,5 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
+filetype on                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -10,7 +10,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Mostra arvore de diretórios no vim
+" Directory tree
 Plugin 'preservim/nerdtree' | 
  \ Plugin 'Xuyuanp/nerdtree-git-plugin'
 
@@ -46,11 +46,12 @@ Plugin 'tpope/vim-commentary'
 " Snippets
 Plugin 'honza/vim-snippets'
 
-"Autocomplete para js
+"Autocomplete js
 Plugin 'Shougo/deoplete.nvim'
 
 " prettier plugin
 Plugin 'prettier/vim-prettier'
+Plugin 'eslint/eslint'
 
 " Syntax highlighting
 Plugin 'pangloss/vim-javascript' " js
@@ -60,18 +61,18 @@ Plugin 'posva/vim-vue'
 " Plugin 'vim-latex/vim-latex'
 Plugin 'lervag/vimtex'
 
-"js plugins
+" js plugins
 Plugin 'yuezk/vim-js'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'maxmellon/vim-jsx-pretty'
 
-"surround with quotes, parenthesis or xml tags plugin
+" surround with quotes, parenthesis or xml tags plugin
 Plugin 'tpope/vim-surround' 
 
-"cpp syntax highlighting
+" c++ syntax highlighting
 Plugin 'bfrg/vim-cpp-modern'
 
-"TODO lists plugin
+" TODO lists plugin
 Plugin 'vim-scripts/TaskList.vim'
 
 " Status bar plugin
@@ -83,10 +84,16 @@ Plugin 'jwalton512/vim-blade'
 " Markdown preview 
 " Plugin 'instant-markdown/vim-instant-markdown'
 
-"Pep 8 ident
+" Pep 8 ident
 Plugin 'Vimjas/vim-python-pep8-indent'
 
-"All of your Plugins must be added before the following line
+" Rust config
+Plugin 'rust-lang/rust.vim'
+
+" Use vim as pager
+Plugin 'lambdalisue/vim-pager'
+
+" All of your Plugins must be added before the following line
 call vundle#end()            " required
 
 
@@ -149,7 +156,7 @@ runtime! debian.vim
 " Vim5 and later versions support syntax highlighting. Uncommenting the next
 " line enables syntax highlighting by default.
 if has("syntax")
-  syntax on
+  syntax enable
 endif
 
 " If using a dark background within the editing area and syntax highlighting
@@ -337,6 +344,13 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" Mappings for eslint
+" lint current file
+noremap <leader>l  :make % <cr>:cwindow<cr>:redraw!<cr>
+" lint and fix current file
+noremap <leader>lf :make --fix % <cr>:cwindow<cr>:redraw!<cr>
+
+
 " copy/paste config
 vnoremap <C-y> "+y
 map <C-p> "+p
@@ -368,3 +382,6 @@ else
 endif
 " Toggle NERDTree
 nmap <F6> :NERDTreeToggle<CR>
+
+" Rust autolint
+let g:rustfmt_autosave = 1
