@@ -120,9 +120,11 @@ fi
 setxkbmap -option caps:super
 
 # bash in vim mode
+alias vi="vim"
 set -o vi
-set VISUAL="vi"
-set EDITOR=$VISUAL
+export VISUAL="vim"
+export EDITOR="vim"
 
 # vcpkg autocompletion
 # source /home/wallace/src/vcpkg/scripts/vcpkg_completion.bash
+. "$HOME/.cargo/env"
