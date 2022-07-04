@@ -10,6 +10,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" testing
+Plugin 'vim-test/vim-test'
+
 " Directory tree
 Plugin 'preservim/nerdtree' | 
  \ Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -40,13 +43,13 @@ Plugin 'ericcurtin/CurtineIncSw.vim'
 Plugin 'docunext/closetag.vim'
 Plugin 'othree/html5.vim'
 
-"Commentary plugin
+" Commentary plugin
 Plugin 'tpope/vim-commentary'
 
 " Snippets
 Plugin 'honza/vim-snippets'
 
-"Autocomplete js
+" Autocomplete js
 Plugin 'Shougo/deoplete.nvim'
 
 " prettier plugin
@@ -65,6 +68,8 @@ Plugin 'lervag/vimtex'
 Plugin 'yuezk/vim-js'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'pantharshit00/vim-prisma' " prisma orm syntax
+Plugin 'puremourning/vimspector' " debugger
 
 " surround with quotes, parenthesis or xml tags plugin
 Plugin 'tpope/vim-surround' 
@@ -90,8 +95,7 @@ Plugin 'Vimjas/vim-python-pep8-indent'
 " Rust config
 Plugin 'rust-lang/rust.vim'
 
-" Use vim as pager
-Plugin 'lambdalisue/vim-pager'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -227,8 +231,8 @@ endif
 "nnoremap <A-k> :m .-2<CR>==
 
 " Tabs config
-nnoremap <C-l> :tabn<CR>
-nnoremap <C-h> :tabp<CR>
+nnoremap <C-k> :tabn<CR>
+nnoremap <C-j> :tabp<CR>
 
 " Split config
 set splitbelow
@@ -259,6 +263,17 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Use K to show documentation in preview window.
+function! s:show_documentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
 " AutoCompletion navigation on Tab
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -266,11 +281,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Disable swap files
 set noswapfile
 set backupcopy=yes
-
-" Terminal emulator config
-tnoremap <Esc> <C-\><C-n>
-nnoremap <S-t> :tabnew term://bash<CR>
-nnoremap <C-t> :vsp term://bash<CR>
 
 " Vimtex config
 let g:vimtex_view_general_viewer="evince"
@@ -350,7 +360,6 @@ noremap <leader>l  :make % <cr>:cwindow<cr>:redraw!<cr>
 " lint and fix current file
 noremap <leader>lf :make --fix % <cr>:cwindow<cr>:redraw!<cr>
 
-
 " copy/paste config
 vnoremap <C-y> "+y
 map <C-p> "+p
@@ -377,11 +386,24 @@ nnoremap <Leader><Leader> :noh<cr>
 " Figure out the system Python for Neovim.
 if exists("$VIRTUAL_ENV")
     let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
-else
-    let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+else 
+    let g:python3_host_prog=substitute(system("which python3 | head -n 1"), "\n", '', 'g')
 endif
 " Toggle NERDTree
-nmap <F6> :NERDTreeToggle<CR>
+nmap <F1> :NERDTreeToggle<CR>
 
 " Rust autolint
 let g:rustfmt_autosave = 1
+
+" Vimspector mappings
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_base_dir='/home/wallace/.vim/bundle/vimspector'
+
+" testing mappings
+nmap <silent> <leader>tt :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+command CdRoot :cd %:h | cd `git rev-parse --show-toplevel`
