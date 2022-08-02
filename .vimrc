@@ -1,5 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype on                  " required
+set clipboard=unnamed
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -195,6 +196,7 @@ set expandtab
 set noshiftround
 set number relativenumber
 set nu rnu
+set cmdheight=1
 
 " NERDTREE config
 " Start NERDTree and put the cursor back in the other window.
@@ -406,4 +408,3 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
-command CdRoot :cd %:h | cd `git rev-parse --show-toplevel`
